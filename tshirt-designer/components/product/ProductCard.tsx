@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product } from '@/lib/types';
+import Link from 'next/link';
 
 interface ProductCardProps {
   product: Product;
@@ -44,9 +45,9 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </div>
           
-          <button className="w-full mt-5 rounded-xl bg-black px-4 py-3 text-center text-sm font-bold text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 transition-all active:scale-[0.98]">
+          <Link href={`/products/${product.id}`} className="block w-full mt-5 rounded-xl bg-black px-4 py-3 text-center text-sm font-bold text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 transition-all active:scale-[0.98]">
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>
