@@ -2,8 +2,9 @@ import React from 'react';
 import { products } from '@/lib/products';
 import Link from 'next/link';
 
-export default function ProductDetailsPage({ params }: { params: { id: string } }) {
-  const product = products.find((p) => p.id === params.id);
+export default async function ProductDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
     return (
@@ -74,12 +75,12 @@ export default function ProductDetailsPage({ params }: { params: { id: string } 
             </div>
 
             <div className="mt-10 flex gap-4">
-              <button 
-                type="button"
+              <Link 
+                href={`/customize/${product.id}`}
                 className="flex-1 bg-black border border-transparent rounded-2xl py-4 px-8 flex items-center justify-center text-base font-bold text-white hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 transition-all shadow-md hover:shadow-lg active:scale-[0.98]"
               >
                 Customize
-              </button>
+              </Link>
             </div>
             
             <div className="mt-8 text-sm text-gray-500 space-y-4">
