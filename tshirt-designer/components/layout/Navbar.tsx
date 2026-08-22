@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useCart } from "@/lib/cartContext";
 
 export default function Navbar() {
+  const { totalItems } = useCart();
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/20 bg-white/60 backdrop-blur-lg shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,9 +34,14 @@ export default function Navbar() {
             </Link>
             <Link
               href="/cart"
-              className="relative text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-semibold transition-colors group"
+              className="relative flex items-center gap-2 text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-semibold transition-colors group"
             >
-              Cart
+              <span>Cart</span>
+              {totalItems > 0 && (
+                <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-indigo-600 text-white text-xs font-bold leading-none">
+                  {totalItems > 99 ? "99+" : totalItems}
+                </span>
+              )}
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
             </Link>
           </div>

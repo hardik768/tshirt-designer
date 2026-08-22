@@ -2,6 +2,8 @@
 
 import React, { useState, useRef } from 'react';
 import { Product } from '@/lib/types';
+import { useCart } from '@/lib/cartContext';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 interface CustomizerClientProps {
@@ -22,6 +24,8 @@ const colorMap: Record<string, string> = {
 };
 
 export default function CustomizerClient({ product }: CustomizerClientProps) {
+  const { addItem } = useCart();
+  const router = useRouter();
   const defaultColor = product.colors[0] || '';
   const defaultSize = product.sizes[0] || '';
 
@@ -64,18 +68,18 @@ export default function CustomizerClient({ product }: CustomizerClientProps) {
   const totalPrice = product.price + textCost + imageCost;
 
   const handleAddToCart = () => {
-    const customization = {
+    addItem({
       productId: product.id,
       productName: product.name,
+      imageUrl: product.imageUrl,
       basePrice: product.price,
       selectedColor,
       selectedSize,
       customText,
-      customImage: customImage ? "Local Image Data" : null,
-      totalPrice
-    };
-    console.log("Added to cart:", customization);
-    alert("Added to cart! Check console for details.");
+      customImage,
+      totalPrice,
+    });
+    router.push('/cart');
   };
 
   return (
